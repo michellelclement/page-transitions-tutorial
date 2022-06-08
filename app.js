@@ -6,8 +6,7 @@ const tlEnter = gsap.timeline({
   defaults: { duration: 0.75, ease: "Power2.easeOut" }
 });
 
-// Functions for Leave and Enter animations
-
+// Function for Leave animation
 const leaveAnimation = (current, done) => {
   const product = current.querySelector(".image-container");
   const text = current.querySelector(".showcase-text");
@@ -37,6 +36,36 @@ const leaveAnimation = (current, done) => {
   );
 };
 
+// Function for Enter animation
+const enterAnimation = (current, done) => {
+  const product = current.querySelector(".image-container");
+  const text = current.querySelector(".showcase-text");
+  const circles = current.querySelectorAll(".circle");
+  const arrow = current.querySelector(".showcase-arrow");
+  return (
+    tlEnter.fromTo(arrow, { opacity: 0, y: 50 }, { opacity: 1, y: 0 }),
+    tlEnter.fromTo(
+      product,
+      { y: -100, opacity: 0 },
+      { y: 0, opacity: 1, onComplete: done },
+      "<"
+    ),
+    tlEnter.fromTo(text, { y: 100, opacity: 0 }, { opacity: 1, y: 0 }, "<"),
+    tlEnter.fromTo(
+      circles,
+      { y: -200, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.15,
+        ease: "back.out(1.7)",
+        duration: 1
+      },
+      "<"
+    )
+  );
+};
+
 //Run animations
 barba.init({
   preventRunning: true,
@@ -52,11 +81,7 @@ barba.init({
       enter(data) {
         const done = this.async();
         let next = data.next.container;
-        gsap.fromTo(
-          next,
-          { opacity: 0 },
-          { opacity: 1, duration: 1, onComplete: done }
-        );
+        enterAnimation(next, done);
       }
     }
   ]
