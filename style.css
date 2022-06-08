@@ -8,3 +8,10 @@
 body {
   background: linear-gradient(260deg, #b75d62, #754d4f);
 }
+
+.showcase {
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: space-between;
+}
