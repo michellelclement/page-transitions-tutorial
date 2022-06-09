@@ -96,8 +96,9 @@ barba.init({
     //Product page animation
     {
       name: "product-transition",
-      from: { namespace: ["handbag"] },
-      to: { namespace: ["product"] },
+      sync: true,
+      from: { namespace: ["handbag", "product"] },
+      to: { namespace: ["product", "handbag"] },
       enter(data) {
         const done = this.async();
         let next = data.next.container;
@@ -121,8 +122,9 @@ function productEnterAnimation(next, done) {
   );
 }
 function productLeaveAnimation(current, done) {
-  tlLeave.fromTo(current, { opacity: 1 }, { opacity: 0, onComplete: done });
+  tlLeave.fromTo(current, { y: "0%" }, { y: "100%", onComplete: done });
 }
+
 //Changing gradient on showcase
 function getGradient(name) {
   switch (name) {
